@@ -20,6 +20,21 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
+async function run() {
+  try {
+    const serviceCollection = client.db("photography").collection("service");
+
+    app.get("/services", async (req, res) => {
+      const query = {};
+      const cursor = serviceCollection.find(query);
+      const services = await cursor.toArray();
+      res.send(services);
+    });
+  } finally {
+  }
+}
+run().catch((err) => console.log(err));
+
 // ----------------------------------
 app.get("/", (req, res) => {
   res.send("server is runnig");
