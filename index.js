@@ -31,6 +31,14 @@ async function run() {
       res.send(services);
     });
 
+    // limit
+    app.get("/", async (req, res) => {
+      const query = {};
+      const cursor = serviceCollection.find(query).limit(3);
+      const services = await cursor.toArray();
+      res.send(services);
+    });
+
     // for single service find
     app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
